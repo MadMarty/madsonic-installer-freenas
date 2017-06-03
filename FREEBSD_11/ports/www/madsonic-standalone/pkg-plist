@@ -1,0 +1,8 @@
+%%DATADIR%%/madsonic.war
+%%DATADIR%%/madsonic-booter.jar
+%%FFMPEG%%%%MADSONIC_HOME%%/transcode/ffmpeg
+%%FLAC%%%%MADSONIC_HOME%%/transcode/flac
+%%LAME%%%%MADSONIC_HOME%%/transcode/lame
+@postunexec test -d %%MADSONIC_HOME%% && (echo "Configuration information and database saved." && echo "If you you are permanently uninstalling this package" && echo "please remove %%MADSONIC_HOME%% and its contents manually.") | true
+@dir(%%USER%%,%%GROUP%%,750) %%MADSONIC_HOME%%/transcode
+@dir(%%USER%%,%%GROUP%%,750) %%MADSONIC_HOME%%

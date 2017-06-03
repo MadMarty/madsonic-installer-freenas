@@ -1,0 +1,6 @@
+*~
+/build/
+/sbin/
+/bin/
+/target/
+.git-repo-setting

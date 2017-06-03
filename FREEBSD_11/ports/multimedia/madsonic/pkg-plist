@@ -1,0 +1,5 @@
+%%DATADIR%%/Madsonic/madsonic-booter.jar
+%%DATADIR%%/Madsonic/madsonic.war
+@dirrmtry %%DATADIR%%/Madsonic
+@dirrmtry %%DATADIR%%
+@sample etc/%%PORTNAME%%.conf.sample

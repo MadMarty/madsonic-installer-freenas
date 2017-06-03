@@ -1,0 +1,12 @@
+Transcoding in Madsonic is a way to re-encode music on the fly to a format
+your listening device supports. A common use is transcoding FLAC, WMA,
+and Vorbis audio to MP3 for devices supporting only that codec.
+
+Configuring transcoding uses up to three commands one would use on a normal
+command line pipe but with a whitelist of executables installed or linked into
+%%MADSONIC_HOME%%/transcode. The transcoding configuration page takes
+transcoding rules in the form of:
+
+  [rule name] [convert from] [convert to] [command 1] [command 2] 
+
+The most compatible single audio transcoding command is with FFmpeg

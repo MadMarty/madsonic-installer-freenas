@@ -1,0 +1,61 @@
+#!/bin/sh
+#
+# PROVIDE: %%PORTNAME%%
+# REQUIRE: LOGIN DAEMON NETWORKING
+# KEYWORD: shutdown
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# %%PORTNAME%%_enable:		Set to NO by default. 
+#		                Set it to YES to enable it.
+#
+# %%PORTNAME%%_user:		The user account %%PORTNAME%% daemon runs as what
+#                               you want it to be. It uses '%%USER%%' user by default. 
+#                               Do not sets it as empty or it will run as root.
+#
+# %%PORTNAME%%_group:		The group account %%PORTNAME%% daemon runs as what
+#                               you want it to be. It uses '%%GROUP%%' group by default. 
+#                               Do not sets it as empty or it will run as wheel.
+#
+# %%PORTNAME%%_data_dir:	Directory where %%PORTNAME%% configuration
+#                               data is stored.
+#                               Default: /var/db/%%PORTNAME%%
+
+. /etc/rc.subr
+name="%%PORTNAME%%"
+rcvar="${name}_enable"
+load_rc_config ${name}
+
+: ${%%PORTNAME%%_enable:="NO"}
+: ${%%PORTNAME%%_user:="%%USER%%"}
+: ${%%PORTNAME%%_group:="%%GROUP%%"}
+: ${%%PORTNAME%%_data_dir:="/var/db/%%PORTNAME%%"}
+
+. %%PREFIX%%/etc/%%PORTNAME%%.conf
+if ${MADSONIC_SSL}; then
+	madsonic_ssl_flags="-Dmadsonic.httpsPort=${MADSONIC_PORT}" && MADSONIC_PORT="0"
+	if [ ! -z ${MADSONIC_SSL_KEYSTORE} ]; then
+		madsonic_ssl_flags=${madsonic_ssl_flags}" -Dmadsonic.ssl.keystore=${MADSONIC_SSL_KEYSTORE} -Dmadsonic.ssl.password=${MADSONIC_SSL_PASSWORD}"
+	fi
+fi
+
+madsonic_chdir="%%DATADIR%%/Madsonic"
+command="/usr/sbin/daemon"
+procname="%%JAVA_CMD%%"
+command_args="-f ${procname} -Xmx${MADSONIC_MAX_MEMORY}m -Dmadsonic.home=${madsonic_data_dir} -Dmadsonic.port=${MADSONIC_PORT} ${madsonic_ssl_flags} -Dmadsonic.contextPath=${MADSONIC_CONTEXT_PATH} -Djava.awt.headless=true -jar ${madsonic_chdir}/madsonic-booter.jar"
+
+start_precmd="%%PORTNAME%%_prestart"
+%%PORTNAME%%_prestart() {
+	export LC_CTYPE="${MADSONIC_LOCALE}"
+
+	if [ ! -d ${%%PORTNAME%%_data_dir} ]; then
+		install -d -o ${%%PORTNAME%%_user} -g ${%%PORTNAME%%_group} ${%%PORTNAME%%_data_dir}
+		if [ -f %%PREFIX%%/bin/ffmpeg ]; then
+			install -d -o ${%%PORTNAME%%_user} -g ${%%PORTNAME%%_group} ${%%PORTNAME%%_data_dir}/transcode
+			ln -s %%PREFIX%%/bin/ffmpeg ${%%PORTNAME%%_data_dir}/transcode
+		fi
+	fi
+}
+
+run_rc_command "$1"
