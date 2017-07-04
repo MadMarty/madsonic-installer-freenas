@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	syncthing
-PORTVERSION=	0.9.2
+PORTVERSION=	0.14.31
 CATEGORIES=	net-p2p
 MASTER_SITES=	https://github.com/syncthing/${PORTNAME}/releases/download/v${PORTVERSION}/
 DISTNAME=	${PORTNAME}-freebsd-${ARCH}-v${PORTVERSION}
@@ -20,7 +20,7 @@ SUB_LIST=	PORTNAME=${PORTNAME} USER=${USERS} GROUP=${GROUPS}
 SUB_FILES=	pkg-message
 USE_RC_SUBR=	${PORTNAME}
 
-USERS=		sync
+USERS=		syncthing
 GROUPS=		${USERS}
 
 .include <bsd.port.pre.mk>

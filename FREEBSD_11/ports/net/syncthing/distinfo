@@ -1,2 +1,3 @@
-SHA256 (syncthing-freebsd-amd64-v0.8.7.tar.gz) = 76c9030449ec6eaf2a222bb9bf43e907c566cc6d23d9d29373499991140a2280
-SIZE (syncthing-freebsd-amd64-v0.8.7.tar.gz) = 2643221
+TIMESTAMP = 1499078180
+SHA256 (syncthing-freebsd-amd64-v0.14.31.tar.gz) = 294246a17875cbd22d0901f0db24cf02ff39bc1f2b037d9d455a5844d549be9a
+SIZE (syncthing-freebsd-amd64-v0.14.31.tar.gz) = 6415924

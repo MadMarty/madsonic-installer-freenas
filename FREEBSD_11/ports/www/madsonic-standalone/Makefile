@@ -6,8 +6,8 @@
 
 PORTNAME=	madsonic-standalone
 PORTVERSION=	6.3
-BUILDVERSION=	9500
-DISTDATE=	20170602
+BUILDVERSION=	9540
+DISTDATE=	20170703
 PORTREVISION=	5
 CATEGORIES=	www java
 MASTER_SITES=	http://madsonic.org/download/${PORTVERSION}/
@@ -50,12 +50,12 @@ NO_WRKSUBDIR=	yes
 NO_BUILD=	yes
 USE_JAVA=	yes
 USE_RC_SUBR=	madsonic
-JAVA_VERSION=	1.7+
+JAVA_VERSION=	1.8+
 JAVA_RUN=	yes
 
 # Don't waste UID/GID and reuse Madsonic's user.
-USERS=		madsonic
-GROUPS=		madsonic
+USERS=		media
+GROUPS=		media
 
 # Keep the same variable names as in the Madsonic port to minimize diffs.
 MADSONIC_HOME=	/var/madsonic
@@ -91,6 +91,4 @@ post-install-FLAC-on:
 post-install-LAME-on:
 	${LN} -sf ${PREFIX}/bin/lame ${STAGEDIR}${MADSONIC_HOME}/transcode/lame
 
-.include <bsd.port.mk>BUILDVERSION=	9480
-DISTDATE=	20170529
-PORTREVISION=	4
+.include <bsd.port.mk>
